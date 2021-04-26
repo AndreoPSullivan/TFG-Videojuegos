@@ -28,7 +28,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     private float m_currentH = 0;
 
     private readonly float m_interpolation = 50;
-    private readonly float m_walkScale = 0.9f;
+    private readonly float m_walkScale = 0.5f;
     private readonly float m_backwardsWalkScale = 0.2f;
     private readonly float m_backwardRunScale = 0.66f;
 
@@ -108,9 +108,10 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void Update()
     {
-        if (!m_jumpInput && Input.GetKey(KeyCode.Space))
+        
+        if (Input.GetKey(KeyCode.Space))
         {
-            m_jumpInput = true;
+            m_animator.SetBool("Pickup", true);
         }
     }
 
