@@ -9,10 +9,7 @@ public class GameController : MonoBehaviour
 
     int language = 0; 
     public TextMeshProUGUI selectChar;
-    private static float dayDuration = 5;
-    private float nextDay = 5;
-    private static float timeSwitchLight = 1;
-    private bool started = false; 
+    public TextMeshProUGUI tasks; 
 
     [SerializeField]
     Light light;
@@ -24,7 +21,7 @@ public class GameController : MonoBehaviour
     Light light3;
 
     [SerializeField]
-    Material luz; 
+    Material luz;     
 
     private float initTime;
     private float today = 1;
@@ -32,6 +29,11 @@ public class GameController : MonoBehaviour
     private float nightTime;
     private bool _switchOffLight = false;
     private bool _switchOnLight = false;
+
+    private static float dayDuration = 5;
+    private float nextDay = 5;
+    private static float timeSwitchLight = 1;
+    private bool started = false;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,8 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
+        
+        //Light control (temporally)  
         if (Time.time >= nightTime && started) {           
             today++;
             nightTime = dayDuration * today;            
@@ -60,10 +64,6 @@ public class GameController : MonoBehaviour
         {
             switchOnLight();
         }
-
-
-
-
     }
 
 
@@ -100,6 +100,7 @@ public class GameController : MonoBehaviour
             _switchOnLight = false;
         }
     }
+
     public void changeLanguage(int language) {
         this.language = language;
         this.Start(); 
@@ -140,5 +141,9 @@ public class GameController : MonoBehaviour
 
     private void startGameDepression() {
 
+    }
+
+    public void addTask(int task) { 
+        tasks.text = lang.getText(language, task);
     }
 }

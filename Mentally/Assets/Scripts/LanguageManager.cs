@@ -15,9 +15,9 @@ public class LanguageManager
     private word mWord;
 
 
-    string[,] names = new string[2, 1] {
-        {"Select a character"}, //Eng
-        {"Selecciona un personaje"} //Spa
+    string[,] names = new string[2, 2] {
+        {"Select a character", "Time to go to bed"}, //Eng
+        {"Selecciona un personaje", "Es hora de ir a la cama"} //Spa
 
     };
 

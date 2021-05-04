@@ -21,6 +21,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     [SerializeField] private Animator m_animator = null;
     [SerializeField] private Rigidbody m_rigidBody = null;
+    [SerializeField] private GameObject character; 
 
     [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
@@ -199,5 +200,17 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     }
 
 
-   
+
+    public void GoToBed(Transform bed, Transform lookAtTarget)
+    {
+
+        transform.position = bed.position + new Vector3(0, 7, 10); 
+
+        Vector3 direction = (lookAtTarget.position - character.transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(0, direction.y, direction.z));    // flattens the vector3
+        transform.rotation = Quaternion.Slerp(character.transform.rotation, lookRotation, Time.deltaTime * 3);
+    }
+
+
+
 }
