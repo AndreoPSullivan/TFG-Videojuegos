@@ -35,6 +35,14 @@ public class GameController : MonoBehaviour
     private static float timeSwitchLight = 1;
     private bool started = false;
 
+
+    private int character = 0;
+
+   
+    [SerializeField] Image timeController;
+    public float waitTime = 10.0f;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +72,13 @@ public class GameController : MonoBehaviour
         {
             switchOnLight();
         }
+
+
+        if (started)
+        {
+            timeController.fillAmount -= 1.0f / waitTime * Time.deltaTime;
+        }
+
     }
 
 
@@ -112,7 +127,9 @@ public class GameController : MonoBehaviour
         initTime = Time.time;
         dayTime += initTime + dayDuration; 
         nightTime += initTime; 
-        started = true; 
+        started = true;
+
+        this.character = character; 
 
         switch (character){          
             //TCA
@@ -131,6 +148,10 @@ public class GameController : MonoBehaviour
     }
 
 
+    public int getCharacter() {
+        return this.character; 
+    }
+
     private void startGameTCA() {
                 
     }
@@ -145,5 +166,9 @@ public class GameController : MonoBehaviour
 
     public void addTask(int task) { 
         tasks.text = lang.getText(language, task);
+    }
+
+    public int getLanguage() {
+        return this.language; 
     }
 }

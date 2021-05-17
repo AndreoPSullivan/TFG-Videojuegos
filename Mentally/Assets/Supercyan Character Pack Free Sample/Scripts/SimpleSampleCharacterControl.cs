@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class SimpleSampleCharacterControl : MonoBehaviour
 {
     private enum ControlMode
@@ -15,13 +15,14 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         Direct
     }
 
+    LanguageManager languageManager = new LanguageManager();
     [SerializeField] private float m_moveSpeed = 200;
     [SerializeField] private float m_turnSpeed = 200;
     [SerializeField] private float m_jumpForce = 4;
 
     [SerializeField] private Animator m_animator = null;
     [SerializeField] private Rigidbody m_rigidBody = null;
-    [SerializeField] private GameObject character; 
+    [SerializeField] private GameObject character;
 
     [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
@@ -44,10 +45,57 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private List<Collider> m_collisions = new List<Collider>();
 
+    private bool inBed = false;
+    private Transform bedPosition;
+    int bucleWakeup = 0;
+
+    [SerializeField] private GameObject gameController;
+    private GameController gameControllerScript;
+    public TextMeshProUGUI textCharacter;
+    [SerializeField] GameObject texto;
+
+
+    float randomMessage = 9999999999999999;
+    float timeBetweenMessages = 10;
+
+
+    private int minMessage;
+    private int maxMessage;
+    private int language;
+
     private void Awake()
     {
         if (!m_animator) { gameObject.GetComponent<Animator>(); }
         if (!m_rigidBody) { gameObject.GetComponent<Animator>(); }
+
+
+    }
+
+
+    private void Start()
+    {
+        randomMessage = Time.time + timeBetweenMessages;
+        gameControllerScript = gameController.GetComponent<GameController>();
+
+        switch (gameControllerScript.getCharacter())
+        {
+            case 1:
+                minMessage = 2;
+                maxMessage = 4;
+                break;
+            case 2:
+                minMessage = 5;
+                maxMessage = 7;
+                break;
+            case 3:
+                minMessage = 8;
+                maxMessage = 9;
+                break;
+        }
+
+        language = gameControllerScript.getLanguage();
+
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -89,7 +137,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         else
         {
             m_currentV = 0;
-            m_currentH = 0; 
+            m_currentH = 0;
             if (m_collisions.Contains(collision.collider))
             {
                 m_collisions.Remove(collision.collider);
@@ -109,10 +157,31 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void Update()
     {
-        
-        if (Input.GetKey(KeyCode.Space))
+
+        if (Input.GetKey(KeyCode.Space) && inBed)
         {
+            while (bucleWakeup < 10)
+            {
+                bucleWakeup++;
+                WakeUp();
+
+            }
+            bucleWakeup = 0;
+
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+
             m_animator.SetBool("Pickup", true);
+
+        }
+
+
+        if (Time.time >= randomMessage)
+        {
+            randomMessage += timeBetweenMessages;
+            textCharacter.text = languageManager.getText(language, Random.Range(minMessage, maxMessage));
+            texto.active = true;
         }
     }
 
@@ -168,49 +237,68 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void DirectUpdate()
     {
-        float v = Input.GetAxis("Vertical");
-        float h = Input.GetAxis("Horizontal");
 
-        Transform camera = Camera.main.transform;
-
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (!inBed)
         {
-            v *= m_walkScale;
-            h *= m_walkScale;
+
+            float v = Input.GetAxis("Vertical");
+            float h = Input.GetAxis("Horizontal");
+
+            Transform camera = Camera.main.transform;
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                v *= m_walkScale;
+                h *= m_walkScale;
+            }
+
+            m_currentV = Mathf.Lerp(m_currentV, v, Time.deltaTime * m_interpolation);
+            m_currentH = Mathf.Lerp(m_currentH, h, Time.deltaTime * m_interpolation);
+
+            Vector3 direction = camera.forward * m_currentV + camera.right * m_currentH;
+
+            float directionLength = direction.magnitude;
+            direction.y = 0;
+            direction = direction.normalized * directionLength;
+
+            if (direction != Vector3.zero)
+            {
+                m_currentDirection = Vector3.Slerp(m_currentDirection, direction, Time.deltaTime * m_interpolation);
+
+                transform.rotation = Quaternion.LookRotation(m_currentDirection);
+                transform.position += m_currentDirection * m_moveSpeed * Time.deltaTime;
+
+                m_animator.SetFloat("MoveSpeed", direction.magnitude);
+            }
+
+
         }
 
-        m_currentV = Mathf.Lerp(m_currentV, v, Time.deltaTime * m_interpolation);
-        m_currentH = Mathf.Lerp(m_currentH, h, Time.deltaTime * m_interpolation);
-
-        Vector3 direction = camera.forward * m_currentV + camera.right * m_currentH;
-
-        float directionLength = direction.magnitude;
-        direction.y = 0;
-        direction = direction.normalized * directionLength;
-
-        if (direction != Vector3.zero)
-        {
-            m_currentDirection = Vector3.Slerp(m_currentDirection, direction, Time.deltaTime * m_interpolation);
-
-            transform.rotation = Quaternion.LookRotation(m_currentDirection);
-            transform.position += m_currentDirection * m_moveSpeed * Time.deltaTime;
-
-            m_animator.SetFloat("MoveSpeed", direction.magnitude);
-        }
     }
 
 
 
     public void GoToBed(Transform bed, Transform lookAtTarget)
     {
-
-        transform.position = bed.position + new Vector3(0, 7, 10); 
+        bedPosition = bed;
+        transform.position = bed.position + new Vector3(0, 7, 10);
 
         Vector3 direction = (lookAtTarget.position - character.transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(0, direction.y, direction.z));    // flattens the vector3
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(0, direction.y, direction.z));
         transform.rotation = Quaternion.Slerp(character.transform.rotation, lookRotation, Time.deltaTime * 3);
+        inBed = true;
+        m_animator.SetFloat("MoveSpeed", 0);
+
+
     }
 
+    private void WakeUp()
+    {
+        transform.position = bedPosition.position + new Vector3(-10, 0, 20);
+        inBed = false;
+        m_animator.SetBool("Grounded", m_isGrounded);
+        DirectUpdate();
 
+    }
 
 }

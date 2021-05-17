@@ -8,14 +8,16 @@ public class Bed : MonoBehaviour
     [SerializeField] GameObject character;
     [SerializeField] Transform bed;
     [SerializeField] GameObject controller;
-    [SerializeField] Transform lookAtBed; 
+    [SerializeField] Transform lookAtBed;
 
     private GameController gameController;
     private SimpleSampleCharacterControl characterScript;
-    public bool sleeping = false; 
+    public bool goToBed = true;
+    int i = 0;
+    float timeInitBed;
     // Start is called before the first frame update
     void Start()
-    {  
+    {
         // Find the Enemy script attached to "myEnemy"
         gameController = controller.GetComponent<GameController>();
 
@@ -27,9 +29,22 @@ public class Bed : MonoBehaviour
     {
 
         float dist = Vector3.Distance(character.transform.position, bed.position);
-        if (dist <= 13 && !sleeping){
+        if (dist <= 15 && goToBed)
+        {
+            if (i == 0)
+           {
+                timeInitBed = Time.time + 10;
+            }
             gameController.addTask(1);
-            characterScript.GoToBed(bed, lookAtBed);
+            i++;
+            if (Time.time <= timeInitBed)
+            {
+                characterScript.GoToBed(bed, lookAtBed);
+            }
+            else {
+                i = 0;             
+            }           
+           
         }
     }
 }
