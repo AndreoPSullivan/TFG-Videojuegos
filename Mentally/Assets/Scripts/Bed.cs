@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class Bed : MonoBehaviour
 {
 
@@ -12,13 +12,15 @@ public class Bed : MonoBehaviour
 
     private GameController gameController;
     private SimpleSampleCharacterControl characterScript;
-    public bool goToBed = true;
-    int i = 0;
-    float timeInitBed;
+
+    LanguageManager languageManager = new LanguageManager(); 
+
+    public TextMeshProUGUI textCharacter;
+    [SerializeField] GameObject texto;
+
     // Start is called before the first frame update
     void Start()
     {
-        // Find the Enemy script attached to "myEnemy"
         gameController = controller.GetComponent<GameController>();
 
         characterScript = character.GetComponent<SimpleSampleCharacterControl>();
@@ -29,21 +31,18 @@ public class Bed : MonoBehaviour
     {
 
         float dist = Vector3.Distance(character.transform.position, bed.position);
-        if (dist <= 15 && goToBed)
+        if (dist <= 15)
         {
-            if (i == 0)
-           {
-                timeInitBed = Time.time + 10;
-            }
-            gameController.addTask(1);
-            i++;
-            if (Time.time <= timeInitBed)
-            {
-                characterScript.GoToBed(bed, lookAtBed);
+
+            if (gameController.getCurrentTask() == GameController.TasksEnum.Sleep)
+            {              
+                characterScript.GoToBed(bed, lookAtBed);              
+                
             }
             else {
-                i = 0;             
-            }           
+                textCharacter.text = languageManager.getText(gameController.getLanguage(), 2);
+                texto.active = true;
+            }
            
         }
     }

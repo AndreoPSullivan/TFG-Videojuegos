@@ -7,7 +7,6 @@ public class Sink : MonoBehaviour
 
     [SerializeField] Transform character;
 
-    [SerializeField] AudioClip waterSound;
 
 
     float nextTime = 0;
@@ -24,8 +23,8 @@ public class Sink : MonoBehaviour
         float dist = Vector3.Distance(character.position, gameObject.transform.position);
         if (dist <= 14 && Input.GetKey(KeyCode.Space) && Time.time >= nextTime)
         {
-            nextTime += timeInBetween;           
-            SoundManager.PlaySound(waterSound);            
+            nextTime += timeInBetween;
+            FindObjectOfType<AudioManager>().Play("waterPouring");
 
         }
     }

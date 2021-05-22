@@ -6,6 +6,8 @@ public class LanguageManager
 {
 
     public enum language { English, Spanish }
+
+
     private language mLang;
 
     public enum word
@@ -15,11 +17,11 @@ public class LanguageManager
     private word mWord;
 
 
-    string[,] names = new string[2, 11] {
+    string[,] names = new string[2, 12] {
 
         ///ENG 
         //General 
-        {"Select a character", "Time to go to bed",
+        {"Select a character", "Time to go to bed", "I can't go to bed yet",
             //TCA 
             "I cannot eat anymore, today was too much", "Who is that one on the mirror?? I don't like her!", "I can't stop!",
             //TAS
@@ -29,7 +31,7 @@ public class LanguageManager
         
         ///ESP 
         //General 
-        {"Selecciona un personaje", "Es hora de ir a la cama",
+        {"Selecciona un personaje", "Es hora de ir a la cama", "No puedo irme a la cama ya",
             //TCA 
             "No puedo comer más, lo de hoy fue demasiado", "¿Quién es esa del espejo? ¡No me gusta!", "¡No puedo parar!",
             //TAS

@@ -16,14 +16,13 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     }
 
     LanguageManager languageManager = new LanguageManager();
-    [SerializeField] private float m_moveSpeed = 200;
+    private float m_moveSpeed = 20;
     [SerializeField] private float m_turnSpeed = 200;
-    [SerializeField] private float m_jumpForce = 4;
+    //[SerializeField] private float m_jumpForce = 4;
 
     [SerializeField] private Animator m_animator = null;
     [SerializeField] private Rigidbody m_rigidBody = null;
-    [SerializeField] private GameObject character;
-
+   
     [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
     private float m_currentV = 0;
@@ -37,10 +36,11 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     private bool m_wasGrounded;
     private Vector3 m_currentDirection = Vector3.zero;
 
+    /*
     private float m_jumpTimeStamp = 0;
     private float m_minJumpInterval = 0.25f;
     private bool m_jumpInput = false;
-
+    */
     private bool m_isGrounded;
 
     private List<Collider> m_collisions = new List<Collider>();
@@ -79,17 +79,21 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
         switch (gameControllerScript.getCharacter())
         {
+            //TCA
             case 1:
-                minMessage = 2;
-                maxMessage = 4;
+                minMessage = 3;
+                maxMessage = 5;
                 break;
+            //TAS
             case 2:
-                minMessage = 5;
-                maxMessage = 7;
+                minMessage = 6;
+                maxMessage = 8;
                 break;
+            //Depression
             case 3:
-                minMessage = 8;
-                maxMessage = 9;
+                minMessage = 9;
+                maxMessage = 11;
+                m_moveSpeed = 10; 
                 break;
         }
 
@@ -205,7 +209,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         }
 
         m_wasGrounded = m_isGrounded;
-        m_jumpInput = false;
+        //m_jumpInput = false;
     }
 
     private void TankUpdate()
@@ -283,9 +287,9 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         bedPosition = bed;
         transform.position = bed.position + new Vector3(0, 7, 10);
 
-        Vector3 direction = (lookAtTarget.position - character.transform.position).normalized;
+        Vector3 direction = (lookAtTarget.position - gameObject.transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(0, direction.y, direction.z));
-        transform.rotation = Quaternion.Slerp(character.transform.rotation, lookRotation, Time.deltaTime * 3);
+        transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 3);
         inBed = true;
         m_animator.SetFloat("MoveSpeed", 0);
 
@@ -294,6 +298,10 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void WakeUp()
     {
+
+        gameControllerScript.setCurrentTask(GameController.TasksEnum.Switch);
+        //TODO switch on lights
+        gameControllerScript.addTask(); 
         transform.position = bedPosition.position + new Vector3(-10, 0, 20);
         inBed = false;
         m_animator.SetBool("Grounded", m_isGrounded);

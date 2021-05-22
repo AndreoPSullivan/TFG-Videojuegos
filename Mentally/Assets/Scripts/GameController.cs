@@ -11,24 +11,12 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI selectChar;
     public TextMeshProUGUI tasks; 
 
-    [SerializeField]
-    Light light;
-
-    [SerializeField]
-    Light light2;
-
-    [SerializeField]
-    Light light3;
-
-    [SerializeField]
-    Material luz;     
+     
 
     private float initTime;
     private float today = 1;
     private float dayTime;
     private float nightTime;
-    private bool _switchOffLight = false;
-    private bool _switchOnLight = false;
 
     private static float dayDuration = 5;
     private float nextDay = 5;
@@ -42,6 +30,13 @@ public class GameController : MonoBehaviour
     [SerializeField] Image timeController;
     public float waitTime = 10.0f;
 
+    public enum TasksEnum
+    { 
+        None, Sleep, Eat, Clean, Switch   
+    
+    }
+
+    private TasksEnum currentTask = TasksEnum.None; 
 
     // Start is called before the first frame update
     void Start()
@@ -54,68 +49,22 @@ public class GameController : MonoBehaviour
     void Update()
     {        
         
-        //Light control (temporally)  
-        if (Time.time >= nightTime && started) {           
-            today++;
-            nightTime = dayDuration * today;            
-            _switchOffLight = true; 
-        }
-        if (Time.time >= dayTime && started) {
-            dayTime = dayDuration + dayDuration * today; 
-            _switchOnLight = true;         
-        }
-        if (_switchOffLight)
-        {
-            switchOffLight(); 
-        }
-        if (_switchOnLight)
-        {
-            switchOnLight();
-        }
-
-
         if (started)
         {
             timeController.fillAmount -= 1.0f / waitTime * Time.deltaTime;
+
+
+            if (Time.time > initTime + 30  && Time.time < initTime + 35) {
+                currentTask = TasksEnum.Switch;
+                addTask(0);
+            }
+
         }
 
     }
 
 
-    private void switchOffLight() {
-        double nextUpd = 0f;
-        while ((light.intensity >= 0 || light2.intensity >= 0 || light3.intensity >= 0) && Time.time > nextUpd)
-        {
-            nextUpd = Time.time + timeSwitchLight;
-            light.intensity -= 0.02f;
-            light2.intensity -= 0.02f;
-            light3.intensity -= 0.02f;
-            luz.DisableKeyword("_EMISSION");
-        }
-
-        if (light.intensity <= 0 && light2.intensity >= 0 && light3.intensity >= 0)
-        {
-            _switchOffLight = false;
-        }
-    }
-
-
-    private void switchOnLight() {
-        double nextUpd = 0f;
-        while ((light.intensity <= 2 || light2.intensity <= 3 || light3.intensity <= 3) && Time.time > nextUpd)
-        {
-            nextUpd = Time.time + timeSwitchLight;
-            light.intensity += 0.02f;
-            light2.intensity += 0.02f;
-            light3.intensity += 0.02f;
-            luz.EnableKeyword("_EMISSION");
-        }
-        if (light.intensity >= 2 && light2.intensity >= 3 && light3.intensity >= 3)
-        {
-            _switchOnLight = false;
-        }
-    }
-
+   
     public void changeLanguage(int language) {
         this.language = language;
         this.Start(); 
@@ -168,7 +117,21 @@ public class GameController : MonoBehaviour
         tasks.text = lang.getText(language, task);
     }
 
+
+    public void addTask()
+    {
+        tasks.text = ""; 
+    }
+
     public int getLanguage() {
         return this.language; 
+    }
+
+    public TasksEnum getCurrentTask() {
+        return currentTask; 
+    }
+
+    public void setCurrentTask(TasksEnum currentTask) {
+        this.currentTask = currentTask; 
     }
 }

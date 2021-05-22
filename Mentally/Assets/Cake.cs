@@ -26,8 +26,6 @@ public class Cake : MonoBehaviour
     [SerializeField] GameObject texto;
     private GameController gameControllerScript;
 
-
-    [SerializeField] AudioClip eatingSound; 
     // Start is called before the first frame update
     void Start()
     {
@@ -46,22 +44,16 @@ public class Cake : MonoBehaviour
                 hijo = cakes.transform.GetChild(piezaActual).gameObject;
                 hijo.active = false;
                 piezaActual++;
-                SoundManager.PlaySound(eatingSound); 
+
+                FindObjectOfType<AudioManager>().Play("eatingSound");
+                
                 if (piezaActual == totalPiezas && gameControllerScript.getCharacter() == 1)
                 {
                     endedCake = true;
-                    textCharacter.text = languageManager.getText(gameControllerScript.getLanguage(), 2);
+                    textCharacter.text = languageManager.getText(gameControllerScript.getLanguage(), 3);
                     texto.active = true;
                 }
             }         
-
-        }
-
-
-
-        if (endedCake && dist >= 60)
-        {
-            texto.active = false;
 
         }
 

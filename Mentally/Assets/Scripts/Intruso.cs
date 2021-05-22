@@ -25,6 +25,10 @@ public class Intruso : MonoBehaviour
 
     private Vector3 scaleChange;
 
+
+    [SerializeField] GameObject gameController;
+    private GameController gameControllerScript;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +36,8 @@ public class Intruso : MonoBehaviour
 
         scaleChange = new Vector3(2, 2, 2);
         agent = GetComponent<NavMeshAgent>();
+
+        gameControllerScript = gameController.GetComponent<GameController>();
     }
 
     // Update is called once per frame
@@ -47,7 +53,11 @@ public class Intruso : MonoBehaviour
             if (dist <= 6)
             {
                 m_animator.SetFloat("MoveSpeed", 0);
-                RotateTowards();
+                if (gameControllerScript.getCharacter() == 2){
+                    RotateTowards();
+
+                }
+                
             }
             else
             {
@@ -59,8 +69,12 @@ public class Intruso : MonoBehaviour
             float distanceCharacter = Vector3.Distance(lookAtTarget.position, agent.transform.position);
             if (distanceCharacter <= 15 && Time.time >= nextWave) {
                 m_animator.SetBool("Wave", true);
-                nextWave = Time.time + timeBetweenWaves;
-                agent.transform.localScale += scaleChange; 
+                nextWave = Time.time + timeBetweenWaves;      
+
+
+                if (gameControllerScript.getCharacter() == 2){
+                    agent.transform.localScale += scaleChange;
+                }
             }
 
 
