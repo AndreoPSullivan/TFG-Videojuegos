@@ -30,7 +30,7 @@ public class Mirror : MonoBehaviour
         if (dist <= 15 && Time.time >= nextMessage && gameControllerScript.getCharacter() == 1)
         {
             nextMessage = Time.time + 30;
-            textCharacter.text = languageManager.getText(gameControllerScript.getLanguage(), 4);
+            textCharacter.text = languageManager.getText(gameControllerScript.getLanguage()*4+ gameControllerScript.getCharacter(), 1);
             texto.active = true;    
         }
     }

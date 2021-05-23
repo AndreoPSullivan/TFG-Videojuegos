@@ -5,8 +5,8 @@ using UnityEngine;
 public class Sink : MonoBehaviour
 {
 
-    [SerializeField] Transform character;
-
+    [SerializeField] GameObject character;
+    [SerializeField] private Animator m_animator = null;
 
 
     float nextTime = 0;
@@ -14,15 +14,17 @@ public class Sink : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        if (!m_animator) { character.GetComponent<Animator>(); }
     }
 
     // Update is called once per frame
     void Update()
     {
-        float dist = Vector3.Distance(character.position, gameObject.transform.position);
+        float dist = Vector3.Distance(character.transform.position, gameObject.transform.position);
         if (dist <= 14 && Input.GetKey(KeyCode.Space) && Time.time >= nextTime)
         {
+            m_animator.SetBool("Pickup", true);
             nextTime += timeInBetween;
             FindObjectOfType<AudioManager>().Play("waterPouring");
 

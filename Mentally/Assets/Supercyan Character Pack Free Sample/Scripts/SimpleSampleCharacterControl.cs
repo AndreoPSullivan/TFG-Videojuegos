@@ -58,10 +58,8 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     float randomMessage = 9999999999999999;
     float timeBetweenMessages = 10;
 
-
-    private int minMessage;
-    private int maxMessage;
-    private int language;
+    private static int minMessage = 0;
+    private static int maxMessage = 4; 
 
     private void Awake()
     {
@@ -81,25 +79,17 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         {
             //TCA
             case 1:
-                minMessage = 3;
-                maxMessage = 5;
                 break;
             //TAS
             case 2:
-                minMessage = 6;
-                maxMessage = 8;
                 break;
             //Depression
             case 3:
-                minMessage = 9;
-                maxMessage = 11;
                 m_moveSpeed = 10; 
                 break;
         }
 
-        language = gameControllerScript.getLanguage();
-
-
+    
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -172,19 +162,12 @@ public class SimpleSampleCharacterControl : MonoBehaviour
             }
             bucleWakeup = 0;
 
-        }
-        else if (Input.GetKey(KeyCode.Space))
-        {
-
-            m_animator.SetBool("Pickup", true);
-
-        }
-
+        }       
 
         if (Time.time >= randomMessage)
         {
             randomMessage += timeBetweenMessages;
-            textCharacter.text = languageManager.getText(language, Random.Range(minMessage, maxMessage));
+            textCharacter.text = languageManager.getText(gameControllerScript.getLanguage() * 4+gameControllerScript.getCharacter(), Random.Range(minMessage, maxMessage));
             texto.active = true;
         }
     }
@@ -299,9 +282,8 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     private void WakeUp()
     {
 
-        gameControllerScript.setCurrentTask(GameController.TasksEnum.Switch);
-        //TODO switch on lights
-        gameControllerScript.addTask(); 
+        gameControllerScript.setCurrentTask(GameController.TasksEnum.Switch);       
+        gameControllerScript.addTask(3); 
         transform.position = bedPosition.position + new Vector3(-10, 0, 20);
         inBed = false;
         m_animator.SetBool("Grounded", m_isGrounded);

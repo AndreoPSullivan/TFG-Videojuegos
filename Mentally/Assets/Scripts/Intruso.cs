@@ -53,10 +53,10 @@ public class Intruso : MonoBehaviour
             if (dist <= 6)
             {
                 m_animator.SetFloat("MoveSpeed", 0);
-                if (gameControllerScript.getCharacter() == 2){
+                //if (gameControllerScript.getCharacter() == 2){
                     RotateTowards();
 
-                }
+                //}
                 
             }
             else
