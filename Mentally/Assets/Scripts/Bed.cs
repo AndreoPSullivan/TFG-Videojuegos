@@ -17,7 +17,6 @@ public class Bed : MonoBehaviour
 
     public TextMeshProUGUI textCharacter;
     [SerializeField] GameObject texto;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -35,8 +34,8 @@ public class Bed : MonoBehaviour
         {
 
             if (gameController.getCurrentTask() == GameController.TasksEnum.Sleep)
-            {              
-                characterScript.GoToBed(bed, lookAtBed);              
+            {
+                characterScript.GoToBed(bed, lookAtBed);
                 
             }
             else {

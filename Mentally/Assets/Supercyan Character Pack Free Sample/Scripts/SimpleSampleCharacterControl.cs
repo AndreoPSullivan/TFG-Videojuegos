@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
+
+[ExecuteInEditMode]
 public class SimpleSampleCharacterControl : MonoBehaviour
 {
     private enum ControlMode
@@ -22,7 +25,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     [SerializeField] private Animator m_animator = null;
     [SerializeField] private Rigidbody m_rigidBody = null;
-   
+
     [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
     private float m_currentV = 0;
@@ -54,18 +57,25 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     public TextMeshProUGUI textCharacter;
     [SerializeField] GameObject texto;
 
+    public Material[] TCA;
+    public Material[] TAS;
+    public Material[] DEP;
+
 
     float randomMessage = 9999999999999999;
     float timeBetweenMessages = 10;
 
     private static int minMessage = 0;
-    private static int maxMessage = 4; 
+    private static int maxMessage = 4;
 
+    private float lastNote = 0.0f;
+
+    SkinnedMeshRenderer player;
     private void Awake()
     {
         if (!m_animator) { gameObject.GetComponent<Animator>(); }
         if (!m_rigidBody) { gameObject.GetComponent<Animator>(); }
-
+        player = gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
 
     }
 
@@ -75,21 +85,27 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         randomMessage = Time.time + timeBetweenMessages;
         gameControllerScript = gameController.GetComponent<GameController>();
 
+    }
+
+    public void onEnable()
+    {
+
         switch (gameControllerScript.getCharacter())
         {
             //TCA
             case 1:
+                player.materials = TCA;
                 break;
             //TAS
             case 2:
+                player.materials = TAS;
                 break;
             //Depression
             case 3:
-                m_moveSpeed = 10; 
+                player.materials = DEP;
+                m_moveSpeed = 10;
                 break;
         }
-
-    
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -162,12 +178,12 @@ public class SimpleSampleCharacterControl : MonoBehaviour
             }
             bucleWakeup = 0;
 
-        }       
+        }
 
-        if (Time.time >= randomMessage)
+        if (Time.time >= randomMessage && !gameControllerScript.getPaused())
         {
-            randomMessage += timeBetweenMessages;
-            textCharacter.text = languageManager.getText(gameControllerScript.getLanguage() * 4+gameControllerScript.getCharacter(), Random.Range(minMessage, maxMessage));
+            randomMessage = Time.time + timeBetweenMessages;
+            textCharacter.text = languageManager.getText(gameControllerScript.getLanguage() * 4 + gameControllerScript.getCharacter(), Random.Range(minMessage, maxMessage));
             texto.active = true;
         }
     }
@@ -275,20 +291,31 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 3);
         inBed = true;
         m_animator.SetFloat("MoveSpeed", 0);
-
+        if (Time.time > lastNote + 25)
+        {
+            gameControllerScript.showNote();
+            lastNote = Time.time;
+        }
 
     }
 
     private void WakeUp()
     {
 
-        gameControllerScript.setCurrentTask(GameController.TasksEnum.Switch);       
-        gameControllerScript.addTask(3); 
+        gameControllerScript.setCurrentTask(GameController.TasksEnum.Switch);
+        gameControllerScript.addTask(3);
         transform.position = bedPosition.position + new Vector3(-10, 0, 20);
         inBed = false;
         m_animator.SetBool("Grounded", m_isGrounded);
         DirectUpdate();
+        lastNote = Time.time;
+    }
 
+    public void reset() {
+        texto.active = false;
+        gameObject.transform.position = new Vector3(3.8f, 0.0f, 116.5f);
+        gameObject.transform.eulerAngles = new Vector3(0.0f, 45.0f, 0.0f);
+        inBed = false;
     }
 
 }

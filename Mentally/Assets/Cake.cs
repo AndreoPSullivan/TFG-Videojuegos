@@ -51,7 +51,7 @@ public class Cake : MonoBehaviour
         if (!endedCake && dist <= 14 && Input.GetKey(KeyCode.Space) && Time.time >= nextPiece)
         {
             m_animator.SetBool("Pickup", true);
-            nextPiece += timeInBetween;
+            nextPiece = Time.time+ timeInBetween;
             if (piezaActual < totalPiezas)
             {
                 hijo = cakes.transform.GetChild(piezaActual).gameObject;
@@ -70,5 +70,17 @@ public class Cake : MonoBehaviour
 
         }
 
+    }
+
+    public void reset()
+    {
+        cakes.transform.localScale = new Vector3(4, 4, 4);
+        nextPiece = 0;
+        endedCake = false;
+
+        for (int i = 0; i < totalPiezas; i++) {
+            hijo = cakes.transform.GetChild(piezaActual).gameObject;
+            hijo.active = true;
+        }
     }
 }

@@ -68,7 +68,7 @@ public class Lamp : MonoBehaviour
                 }
 
                 //TODO Finally the end of the day; Time to go to bed
-                textCharacter.text = languageManager.getText(gameControllerScript.getLanguage()*4+gameControllerScript.getCharacter(), 4);
+                textCharacter.text = languageManager.getText(gameControllerScript.getLanguage() * 4 + gameControllerScript.getCharacter(), 4);
                 texto.active = true;
             }
             else
@@ -92,6 +92,15 @@ public class Lamp : MonoBehaviour
 
     }
 
+    public void reset()
+    {
+        light.intensity = 2;
+        light2.intensity = 2;
+        light3.intensity = 4;
+        _switchOffLight = false;
+        pulsed = false;
+
+    }
 
 }
 
