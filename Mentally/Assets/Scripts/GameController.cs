@@ -10,14 +10,17 @@ public class GameController : MonoBehaviour
     private int language = 0;
     public TextMeshProUGUI selectChar;
     public TextMeshProUGUI tasks;
-
+    public TextMeshProUGUI pauseText;
 
     private float initTime;
     private int numcharacter = 0;
 
     private bool paused = true;
+    public bool musicOn = true;
+
+
     [SerializeField] Image timeController;
-    public float waitTime = 10.0f;
+    private float waitTime = 10.0f;
 
 
     [SerializeField] MeshRenderer[] paredes;
@@ -29,17 +32,18 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject menuPausa;
     [SerializeField] GameObject character;
     [SerializeField] GameObject cake;
-    [SerializeField] GameObject lights; 
+    [SerializeField] GameObject lights;
+    [SerializeField] GameObject time; 
 
     private SimpleSampleCharacterControl characterScript;
     private Cake cakeScript;
-    private Lamp lightScript; 
+    private Lamp lightScript;
 
 
     private int currentNote = 0;
     public enum TasksEnum
     {
-        None, Sleep, Eat, Clean, Switch
+        None, Sleep, Eat, Clean, Switch, OpenDoor, Party
 
     }
 
@@ -51,7 +55,7 @@ public class GameController : MonoBehaviour
         selectChar.text = lang.getText(language * 4, 0);
         characterScript = character.GetComponent<SimpleSampleCharacterControl>();
         cakeScript = cake.GetComponent<Cake>();
-        lightScript = lights.GetComponent<Lamp>(); 
+        lightScript = lights.GetComponent<Lamp>();
     }
 
     // Update is called once per frame
@@ -60,16 +64,22 @@ public class GameController : MonoBehaviour
 
         if (!paused)
         {
-            if (getCharacter() == 3)
+            if (getCharacter() == 1 )
             {
-                timeController.fillAmount -= 1.0f / waitTime * Time.deltaTime;
+                time.SetActive(true); 
+                timeController.fillAmount -= 0.8f / waitTime * 2 * Time.deltaTime;
             }
             else
             {
-
-                timeController.fillAmount -= 1.0f / waitTime * 2 * Time.deltaTime;
+                time.SetActive(true);
+                timeController.fillAmount -= 0.4f / waitTime * Time.deltaTime;
             }
 
+            if (timeController.fillAmount <= 0.0f) {
+                currentTask = TasksEnum.Switch;
+                addTask(4);
+                time.SetActive(false); 
+            }
 
             if (Time.time > initTime + 30 && Time.time < initTime + 35)
             {
@@ -80,7 +90,9 @@ public class GameController : MonoBehaviour
             if (Input.GetKeyDown("escape"))
             {
                 paused = true;
-                menuPausa.active = true; 
+                menuPausa.SetActive(true);
+                setTextPaused(); 
+              
             }
 
         }
@@ -123,7 +135,7 @@ public class GameController : MonoBehaviour
                     pared.material = materialDep;
 
                 }
-                filtroDep.active = true;
+                filtroDep.SetActive(true);
 
                 startGameDepression();
                 break;
@@ -180,8 +192,8 @@ public class GameController : MonoBehaviour
 
     public void showNote()
     {
-        this.notas[currentNote].active = true;
-        this.notas[currentNote].GetComponentInChildren<TextMeshProUGUI>().text = lang.getText(language * 4 + numcharacter, currentNote + 5);
+        this.notas[currentNote].SetActive(true);
+        this.notas[currentNote].GetComponentInChildren<TextMeshProUGUI>().text = lang.getText(language * 4 + numcharacter, currentNote + 6);
         this.currentNote++;
     }
 
@@ -195,21 +207,37 @@ public class GameController : MonoBehaviour
         this.paused = paused;
     }
 
-    public void reset() {
+    public void reset()
+    {
         this.paused = true;
         currentTask = TasksEnum.None;
         timeController.fillAmount = 1;
 
-        for (int i = 0; i < this.notas.Length; i++) {
-            this.notas[currentNote].active = false;
-            this.notas[currentNote].GetComponentInChildren<TextMeshProUGUI>().text = " "; 
+        for (int i = 0; i < this.notas.Length; i++)
+        {
+            this.notas[currentNote].SetActive(false);
+            this.notas[currentNote].GetComponentInChildren<TextMeshProUGUI>().text = " ";
             this.currentNote = 0;
         }
         characterScript.reset();
         addTask();
-        filtroDep.active = false;
+        filtroDep.SetActive(false);
         cakeScript.reset();
         lightScript.reset();
-        
+
+    }
+
+    public bool getMusicOn()
+    {
+        return musicOn;
+    }
+
+    public void setMusicOn(bool musicOn)
+    {
+        this.musicOn = musicOn;
+    }
+
+    public void setTextPaused() {
+        pauseText.text = lang.getText(language * 4, 9);
     }
 }

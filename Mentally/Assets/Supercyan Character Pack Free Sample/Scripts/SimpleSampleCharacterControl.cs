@@ -6,35 +6,20 @@ using TMPro;
 [ExecuteInEditMode]
 public class SimpleSampleCharacterControl : MonoBehaviour
 {
-    private enum ControlMode
-    {
-        /// <summary>
-        /// Up moves the character forward, left and right turn the character gradually and down moves the character backwards
-        /// </summary>
-        Tank,
-        /// <summary>
-        /// Character freely moves in the chosen direction from the perspective of the camera
-        /// </summary>
-        Direct
-    }
+   
 
     LanguageManager languageManager = new LanguageManager();
     private float m_moveSpeed = 20;
-    [SerializeField] private float m_turnSpeed = 200;
-    //[SerializeField] private float m_jumpForce = 4;
 
     [SerializeField] private Animator m_animator = null;
     [SerializeField] private Rigidbody m_rigidBody = null;
 
-    [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
     private float m_currentV = 0;
     private float m_currentH = 0;
 
     private readonly float m_interpolation = 50;
     private readonly float m_walkScale = 0.5f;
-    private readonly float m_backwardsWalkScale = 0.2f;
-    private readonly float m_backwardRunScale = 0.66f;
 
     private bool m_wasGrounded;
     private Vector3 m_currentDirection = Vector3.zero;
@@ -184,7 +169,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         {
             randomMessage = Time.time + timeBetweenMessages;
             textCharacter.text = languageManager.getText(gameControllerScript.getLanguage() * 4 + gameControllerScript.getCharacter(), Random.Range(minMessage, maxMessage));
-            texto.active = true;
+            texto.SetActive(true);
         }
     }
 
@@ -192,51 +177,13 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     {
         m_animator.SetBool("Grounded", m_isGrounded);
 
-        switch (m_controlMode)
-        {
-            case ControlMode.Direct:
-                DirectUpdate();
-                break;
 
-            case ControlMode.Tank:
-                TankUpdate();
-                break;
-
-            default:
-                Debug.LogError("Unsupported state");
-                break;
-        }
-
+        DirectUpdate();
+      
         m_wasGrounded = m_isGrounded;
         //m_jumpInput = false;
     }
 
-    private void TankUpdate()
-    {
-        float v = Input.GetAxis("Vertical");
-        float h = Input.GetAxis("Horizontal");
-
-        bool walk = Input.GetKey(KeyCode.LeftShift);
-
-        if (v < 0)
-        {
-            if (walk) { v *= m_backwardsWalkScale; }
-            else { v *= m_backwardRunScale; }
-        }
-        else if (walk)
-        {
-            v *= m_walkScale;
-        }
-
-        m_currentV = Mathf.Lerp(m_currentV, v, Time.deltaTime * m_interpolation);
-        m_currentH = Mathf.Lerp(m_currentH, h, Time.deltaTime * m_interpolation);
-
-        transform.position += transform.forward * m_currentV * m_moveSpeed * Time.deltaTime;
-        transform.Rotate(0, m_currentH * m_turnSpeed * Time.deltaTime, 0);
-
-        m_animator.SetFloat("MoveSpeed", m_currentV);
-
-    }
 
     private void DirectUpdate()
     {
@@ -312,7 +259,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     }
 
     public void reset() {
-        texto.active = false;
+        texto.SetActive(false);
         gameObject.transform.position = new Vector3(3.8f, 0.0f, 116.5f);
         gameObject.transform.eulerAngles = new Vector3(0.0f, 45.0f, 0.0f);
         inBed = false;

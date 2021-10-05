@@ -40,13 +40,12 @@ public class MusicManager : MonoBehaviour
             return;
         }
 
-        s.source.Play();
-        /*if (FindObjectOfType<PlayerInfo>().musicOn)
-           
-        else
-        {
+
+        if (FindObjectOfType<GameController>().musicOn)
+           s.source.Play();
+        else        {
             s.source.Pause();
-        }*/
+        }
     }
 
 

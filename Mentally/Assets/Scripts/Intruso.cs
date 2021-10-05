@@ -15,8 +15,6 @@ public class Intruso : MonoBehaviour
     Transform lookAtTarget; 
 
     [SerializeField] private Animator m_animator = null;
-    [SerializeField] private Rigidbody m_rigidBody = null;
-
 
     public bool startMoving = false; 
     public float rotationSpeed = 4f;
@@ -28,6 +26,8 @@ public class Intruso : MonoBehaviour
 
     [SerializeField] GameObject gameController;
     private GameController gameControllerScript;
+
+    [SerializeField] Vector3 rotationVector; 
 
     // Start is called before the first frame update
     void Start()
@@ -53,10 +53,15 @@ public class Intruso : MonoBehaviour
             if (dist <= 6)
             {
                 m_animator.SetFloat("MoveSpeed", 0);
-                //if (gameControllerScript.getCharacter() == 2){
+                if (gameControllerScript.getCharacter() == 2)
+                {
                     RotateTowards();
 
-                //}
+                }
+                else {
+
+                    gameObject.transform.eulerAngles = rotationVector; 
+                }
                 
             }
             else

@@ -9,7 +9,7 @@ public class Sink : MonoBehaviour
     [SerializeField] private Animator m_animator = null;
 
 
-    float nextTime = 0;
+    private float nextTime = 0;
     private static float timeInBetween = 10;
     // Start is called before the first frame update
     void Start()

@@ -31,7 +31,7 @@ public class Mirror : MonoBehaviour
         {
             nextMessage = Time.time + 30;
             textCharacter.text = languageManager.getText(gameControllerScript.getLanguage()*4+ gameControllerScript.getCharacter(), 1);
-            texto.active = true;    
+            texto.SetActive(true);
         }
     }
 }

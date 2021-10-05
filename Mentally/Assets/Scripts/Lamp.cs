@@ -54,9 +54,9 @@ public class Lamp : MonoBehaviour
             pulsed = true;
             if (!_switchOffLight)
             {
-                light.intensity -= 0.02f / waitTime * Time.deltaTime;
-                light2.intensity -= 0.02f / waitTime * Time.deltaTime;
-                light3.intensity -= 0.02f / waitTime * Time.deltaTime;
+                light.intensity -= 0.03f / waitTime * Time.deltaTime;
+                light2.intensity -= 0.03f / waitTime * Time.deltaTime;
+                light3.intensity -= 0.03f / waitTime * Time.deltaTime;
                 luz.DisableKeyword("_EMISSION");
 
                 if (light.intensity <= 0 && light2.intensity <= 0 && light3.intensity <= 0)
@@ -67,24 +67,23 @@ public class Lamp : MonoBehaviour
                     gameControllerScript.addTask(1);
                 }
 
-                //TODO Finally the end of the day; Time to go to bed
                 textCharacter.text = languageManager.getText(gameControllerScript.getLanguage() * 4 + gameControllerScript.getCharacter(), 4);
-                texto.active = true;
+                texto.SetActive(true);
             }
             else
             {
-                light.intensity += 0.02f / waitTime * Time.deltaTime;
-                light2.intensity += 0.02f / waitTime * Time.deltaTime;
-                light3.intensity += 0.02f / waitTime * Time.deltaTime;
+                light.intensity += 0.03f / waitTime * Time.deltaTime;
+                light2.intensity += 0.03f / waitTime * Time.deltaTime;
+                light3.intensity += 0.03f / waitTime * Time.deltaTime;
                 luz.EnableKeyword("_EMISSION");
 
                 if (light.intensity >= 2 && light2.intensity >= 3 && light3.intensity >= 3)
                 {
                     _switchOffLight = false;
                     pulsed = false;
-                    //TODO nextTASK 
-                    gameControllerScript.setCurrentTask(GameController.TasksEnum.None);
-                    gameControllerScript.addTask(0);
+                     
+                    gameControllerScript.setCurrentTask(GameController.TasksEnum.OpenDoor);
+                    gameControllerScript.addTask(5);
                 }
             }
 

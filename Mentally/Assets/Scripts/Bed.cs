@@ -40,7 +40,7 @@ public class Bed : MonoBehaviour
             }
             else {
                 textCharacter.text = languageManager.getText(gameController.getLanguage()*4, 2);
-                texto.active = true;
+                texto.SetActive(true);
             }
            
         }
