@@ -252,6 +252,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         gameControllerScript.setCurrentTask(GameController.TasksEnum.Switch);
         gameControllerScript.addTask(3);
         transform.position = bedPosition.position + new Vector3(-10, 0, 20);
+        gameObject.transform.eulerAngles = new Vector3(0.0f, 45.0f, 0.0f);
         inBed = false;
         m_animator.SetBool("Grounded", m_isGrounded);
         DirectUpdate();

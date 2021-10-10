@@ -23,7 +23,7 @@ public class Lamp : MonoBehaviour
     [SerializeField] GameObject gameController;
     private GameController gameControllerScript;
 
-    private bool _switchOffLight = false;
+    private static bool _switchOffLight = false;
     private float waitTime = 0.02f;
     public TextMeshProUGUI textCharacter;
     [SerializeField] GameObject texto;
@@ -98,6 +98,7 @@ public class Lamp : MonoBehaviour
         light3.intensity = 4;
         _switchOffLight = false;
         pulsed = false;
+        luz.EnableKeyword("_EMISSION");
 
     }
 

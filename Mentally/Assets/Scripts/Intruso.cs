@@ -12,11 +12,11 @@ public class Intruso : MonoBehaviour
     Transform target;
 
     [SerializeField]
-    Transform lookAtTarget; 
+    Transform lookAtTarget;
 
     [SerializeField] private Animator m_animator = null;
 
-    public bool startMoving = false; 
+    public bool startMoving = false;
     public float rotationSpeed = 4f;
     private float nextWave = 0;
     private static float timeBetweenWaves = 10;
@@ -27,7 +27,9 @@ public class Intruso : MonoBehaviour
     [SerializeField] GameObject gameController;
     private GameController gameControllerScript;
 
-    [SerializeField] Vector3 rotationVector; 
+    [SerializeField] Vector3 rotationVector;
+
+    [SerializeField] Transform targetDoor;
 
     // Start is called before the first frame update
     void Start()
@@ -56,13 +58,12 @@ public class Intruso : MonoBehaviour
                 if (gameControllerScript.getCharacter() == 2)
                 {
                     RotateTowards();
-
                 }
-                else {
-
-                    gameObject.transform.eulerAngles = rotationVector; 
+                else
+                {
+                    gameObject.transform.eulerAngles = rotationVector;
                 }
-                
+
             }
             else
             {
@@ -72,16 +73,41 @@ public class Intruso : MonoBehaviour
 
 
             float distanceCharacter = Vector3.Distance(lookAtTarget.position, agent.transform.position);
-            if (distanceCharacter <= 15 && Time.time >= nextWave) {
+            if (distanceCharacter <= 15 && Time.time >= nextWave)
+            {
                 m_animator.SetBool("Wave", true);
-                nextWave = Time.time + timeBetweenWaves;      
+                nextWave = Time.time + timeBetweenWaves;
 
 
-                if (gameControllerScript.getCharacter() == 2){
+                if (gameControllerScript.getCharacter() == 2)
+                {
                     agent.transform.localScale += scaleChange;
                 }
             }
 
+
+        }
+
+        if (gameControllerScript.getTimeControllerFilling() <=0.0f)
+        {
+            agent.SetDestination(targetDoor.position);
+            m_animator.SetBool("Grounded", true);
+
+            float dist = Vector3.Distance(targetDoor.position, agent.transform.position);
+
+            if (dist <= 35 && dist >= 30)
+            {
+                m_animator.SetBool("Wave", true);
+            }
+
+            if (dist <= 29)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                m_animator.SetFloat("MoveSpeed", 1);
+            }
 
         }
     }
@@ -94,4 +120,6 @@ public class Intruso : MonoBehaviour
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));    // flattens the vector3
         transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
+
+   
 }

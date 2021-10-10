@@ -33,7 +33,11 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject character;
     [SerializeField] GameObject cake;
     [SerializeField] GameObject lights;
-    [SerializeField] GameObject time; 
+    [SerializeField] GameObject time;
+    [SerializeField] GameObject controles;
+    private bool controlesShown = true;
+
+    [SerializeField] Material luz;
 
     private SimpleSampleCharacterControl characterScript;
     private Cake cakeScript;
@@ -64,21 +68,36 @@ public class GameController : MonoBehaviour
 
         if (!paused)
         {
-            if (getCharacter() == 1 )
+            if (currentTask.Equals(TasksEnum.Party))
             {
-                time.SetActive(true); 
-                timeController.fillAmount -= 0.8f / waitTime * 2 * Time.deltaTime;
-            }
-            else
-            {
-                time.SetActive(true);
-                timeController.fillAmount -= 0.4f / waitTime * Time.deltaTime;
+                if (getCharacter() == 1)
+                {
+                    time.SetActive(true);
+                    timeController.fillAmount -= 0.4f / (waitTime * 1.0f) * Time.deltaTime;
+                }
+                else if (getCharacter() == 2)
+                {
+                    time.SetActive(true);
+                    timeController.fillAmount -= 0.4f / (waitTime * 2.8f) * Time.deltaTime;
+                }
+                else
+                {
+
+                    time.SetActive(true);
+                    timeController.fillAmount -= 0.4f / (waitTime * 2.0f) * Time.deltaTime;
+                }
+
+                if (timeController.fillAmount <= 0.0f)
+                {
+                    currentTask = TasksEnum.Switch;
+                    addTask(4);
+                    time.SetActive(false);
+                }
             }
 
-            if (timeController.fillAmount <= 0.0f) {
-                currentTask = TasksEnum.Switch;
-                addTask(4);
-                time.SetActive(false); 
+            if (controlesShown && Time.time > initTime + 5) {
+                controles.SetActive(false);
+                controlesShown = false; 
             }
 
             if (Time.time > initTime + 30 && Time.time < initTime + 35)
@@ -113,7 +132,7 @@ public class GameController : MonoBehaviour
     public void startGame(int numcharacter)
     {
         initTime = Time.time;
-
+        luz.EnableKeyword("_EMISSION");
         paused = false;
         this.numcharacter = numcharacter;
 
@@ -239,5 +258,9 @@ public class GameController : MonoBehaviour
 
     public void setTextPaused() {
         pauseText.text = lang.getText(language * 4, 9);
+    }
+
+    public float getTimeControllerFilling() { 
+        return this.timeController.fillAmount;             
     }
 }
