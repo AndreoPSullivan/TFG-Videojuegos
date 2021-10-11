@@ -51,7 +51,7 @@ public class Cake : MonoBehaviour
         {
             if (gameControllerScript.getCharacter() != 1 && piezaActual >= 1)
             {
-                textCharacter.text = languageManager.getText(gameControllerScript.getLanguage() * 4 + gameControllerScript.getCharacter(), 6);
+                textCharacter.text = languageManager.getText(gameControllerScript.getLanguage() * 4 + gameControllerScript.getCharacter(), 4);
                 texto.SetActive(true); 
             }
             else
@@ -84,9 +84,9 @@ public class Cake : MonoBehaviour
         cakes.transform.localScale = new Vector3(4, 4, 4);
         nextPiece = 0;
         endedCake = false;
-
+        piezaActual = 0; 
         for (int i = 0; i < totalPiezas; i++) {
-            hijo = cakes.transform.GetChild(piezaActual).gameObject;
+            hijo = cakes.transform.GetChild(i).gameObject;
             hijo.SetActive(true);
         }
     }

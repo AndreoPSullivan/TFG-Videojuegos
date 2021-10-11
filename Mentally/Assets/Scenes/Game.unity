@@ -2293,6 +2293,8 @@ MonoBehaviour:
   character: {fileID: 1241785163}
   cake: {fileID: 896790807}
   lights: {fileID: 1646299423}
+  intruso: {fileID: 1447657096}
+  intruso2: {fileID: 237256909}
   time: {fileID: 2026863139}
   controles: {fileID: 1165404448}
   luz: {fileID: 2100000, guid: f66e9e433c0c4e64c8d45c590e591902, type: 2}
@@ -6041,7 +6043,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tengo ganas de dormir
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1057fb9de5d1bc548bb28c7ea0db7175, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c095e5489ebdc7c4a97b26a33d27156b, type: 2}
   m_sharedMaterial: {fileID: -7604938896673771058, guid: 1057fb9de5d1bc548bb28c7ea0db7175, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6066,8 +6068,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6078,7 +6080,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: -40
+  m_lineSpacing: -20
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -6105,7 +6107,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &927722705
@@ -6330,7 +6332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0.431, y: 0.123, z: 22.478}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.336346, y: -15.016823}
+  m_AnchoredPosition: {x: 11.2, y: -16}
   m_SizeDelta: {x: 18, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &976131093
@@ -6353,9 +6355,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Tengo ganas de dormir
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1057fb9de5d1bc548bb28c7ea0db7175, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c095e5489ebdc7c4a97b26a33d27156b, type: 2}
   m_sharedMaterial: {fileID: -7604938896673771058, guid: 1057fb9de5d1bc548bb28c7ea0db7175, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6380,8 +6382,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6392,7 +6394,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: -40
+  m_lineSpacing: -20
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -6419,7 +6421,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &976131094
@@ -6772,16 +6774,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1065998051}
-  m_LocalRotation: {x: 0.0032427623, y: 0.0021867696, z: -0.30912575, w: 0.95101315}
+  m_LocalRotation: {x: -0.000051884912, y: 0.048331782, z: -0.28085747, w: 0.9585318}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 466396540}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.431, y: 0.123, z: -36.013}
+  m_LocalEulerAnglesHint: {x: 1.55, y: 5.32, z: -32.59}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -23.4, y: -11.6}
+  m_AnchoredPosition: {x: -24, y: -10.9}
   m_SizeDelta: {x: 18, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1065998053
@@ -6804,10 +6806,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "aaaa\xF1a\xF1a\xE1\xE1\xE1"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1057fb9de5d1bc548bb28c7ea0db7175, type: 2}
-  m_sharedMaterial: {fileID: -7604938896673771058, guid: 1057fb9de5d1bc548bb28c7ea0db7175, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c095e5489ebdc7c4a97b26a33d27156b, type: 2}
+  m_sharedMaterial: {fileID: -3307528758170444323, guid: c095e5489ebdc7c4a97b26a33d27156b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6831,8 +6833,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6843,7 +6845,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: -40
+  m_lineSpacing: -20
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -7079,6 +7081,10 @@ PrefabInstance:
     - target: {fileID: 136606663363984694, guid: 0e74cf81e6fd82546b4797f71ceffb81, type: 3}
       propertyPath: m_Radius
       value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 136606663363984694, guid: 0e74cf81e6fd82546b4797f71ceffb81, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 137001386931196262, guid: 0e74cf81e6fd82546b4797f71ceffb81, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -10207,6 +10213,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.12
       objectReference: {fileID: 0}
+    - target: {fileID: 136606663363984694, guid: 0e74cf81e6fd82546b4797f71ceffb81, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 137001386931196262, guid: 0e74cf81e6fd82546b4797f71ceffb81, type: 3}
       propertyPath: m_ReceiveShadows
       value: 1
@@ -11134,7 +11144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0.431, y: 0.123, z: -13.56}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.5, y: 20.2}
+  m_AnchoredPosition: {x: 14.23, y: 20.2}
   m_SizeDelta: {x: 18, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1976568893
@@ -11157,9 +11167,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Tengo ganas de dormir
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1057fb9de5d1bc548bb28c7ea0db7175, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c095e5489ebdc7c4a97b26a33d27156b, type: 2}
   m_sharedMaterial: {fileID: -7604938896673771058, guid: 1057fb9de5d1bc548bb28c7ea0db7175, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -11184,8 +11194,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11196,7 +11206,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: -40
+  m_lineSpacing: -20
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -11223,7 +11233,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1976568894

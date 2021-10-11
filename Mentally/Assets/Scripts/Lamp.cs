@@ -81,9 +81,16 @@ public class Lamp : MonoBehaviour
                 {
                     _switchOffLight = false;
                     pulsed = false;
-                     
-                    gameControllerScript.setCurrentTask(GameController.TasksEnum.OpenDoor);
-                    gameControllerScript.addTask(5);
+
+                    if (gameControllerScript.getDay() <= 2)
+                    {
+                        gameControllerScript.setCurrentTask(GameController.TasksEnum.OpenDoor);
+                        gameControllerScript.addTask(5);
+                    }
+                    else {
+                        gameControllerScript.setCurrentTask(GameController.TasksEnum.None);
+                        gameControllerScript.addTask(7);
+                    }
                 }
             }
 

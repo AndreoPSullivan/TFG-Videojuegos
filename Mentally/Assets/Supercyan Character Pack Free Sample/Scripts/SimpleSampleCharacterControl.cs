@@ -53,7 +53,6 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     private static int minMessage = 0;
     private static int maxMessage = 4;
 
-    private float lastNote = 0.0f;
 
     SkinnedMeshRenderer player;
     private void Awake()
@@ -155,13 +154,9 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && inBed)
         {
-            while (bucleWakeup < 10)
-            {
-                bucleWakeup++;
+            
                 WakeUp();
 
-            }
-            bucleWakeup = 0;
 
         }
 
@@ -238,10 +233,11 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 3);
         inBed = true;
         m_animator.SetFloat("MoveSpeed", 0);
-        if (Time.time > lastNote + 25)
+
+        if (gameControllerScript.getCurrentNote() < gameControllerScript.getDay())
         {
             gameControllerScript.showNote();
-            lastNote = Time.time;
+           
         }
 
     }
@@ -251,12 +247,12 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
         gameControllerScript.setCurrentTask(GameController.TasksEnum.Switch);
         gameControllerScript.addTask(3);
+        gameControllerScript.addDay(); 
         transform.position = bedPosition.position + new Vector3(-10, 0, 20);
         gameObject.transform.eulerAngles = new Vector3(0.0f, 45.0f, 0.0f);
         inBed = false;
         m_animator.SetBool("Grounded", m_isGrounded);
         DirectUpdate();
-        lastNote = Time.time;
     }
 
     public void reset() {

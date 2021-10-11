@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     [SerializeField] Image timeController;
     private float waitTime = 10.0f;
 
+    private int day = 1;
 
     [SerializeField] MeshRenderer[] paredes;
     [SerializeField] Material materialDep;
@@ -33,6 +34,8 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject character;
     [SerializeField] GameObject cake;
     [SerializeField] GameObject lights;
+    [SerializeField] GameObject intruso;
+    [SerializeField] GameObject intruso2;
     [SerializeField] GameObject time;
     [SerializeField] GameObject controles;
     private bool controlesShown = true;
@@ -42,7 +45,8 @@ public class GameController : MonoBehaviour
     private SimpleSampleCharacterControl characterScript;
     private Cake cakeScript;
     private Lamp lightScript;
-
+    private Intruso intruso1Script;
+    private Intruso intruso2Script;
 
     private int currentNote = 0;
     public enum TasksEnum
@@ -60,6 +64,8 @@ public class GameController : MonoBehaviour
         characterScript = character.GetComponent<SimpleSampleCharacterControl>();
         cakeScript = cake.GetComponent<Cake>();
         lightScript = lights.GetComponent<Lamp>();
+        intruso1Script = intruso.GetComponent<Intruso>();
+        intruso2Script = intruso2.GetComponent<Intruso>();
     }
 
     // Update is called once per frame
@@ -97,7 +103,7 @@ public class GameController : MonoBehaviour
 
             if (controlesShown && Time.time > initTime + 5) {
                 controles.SetActive(false);
-                controlesShown = false; 
+                controlesShown = false;
             }
 
             if (Time.time > initTime + 30 && Time.time < initTime + 35)
@@ -110,8 +116,8 @@ public class GameController : MonoBehaviour
             {
                 paused = true;
                 menuPausa.SetActive(true);
-                setTextPaused(); 
-              
+                setTextPaused();
+
             }
 
         }
@@ -216,6 +222,9 @@ public class GameController : MonoBehaviour
         this.currentNote++;
     }
 
+    public int getCurrentNote() {
+        return this.currentNote; 
+    }
     public bool getPaused()
     {
         return this.paused;
@@ -229,6 +238,7 @@ public class GameController : MonoBehaviour
     public void reset()
     {
         this.paused = true;
+        this.day = 1; 
         currentTask = TasksEnum.None;
         timeController.fillAmount = 1;
 
@@ -243,6 +253,8 @@ public class GameController : MonoBehaviour
         filtroDep.SetActive(false);
         cakeScript.reset();
         lightScript.reset();
+        intruso1Script.reset();
+        intruso2Script.reset();
 
     }
 
@@ -260,7 +272,15 @@ public class GameController : MonoBehaviour
         pauseText.text = lang.getText(language * 4, 9);
     }
 
-    public float getTimeControllerFilling() { 
-        return this.timeController.fillAmount;             
+    public float getTimeControllerFilling() {
+        return this.timeController.fillAmount;
+    }
+
+    public int getDay() {
+        return this.day; 
+    }
+
+    public void addDay() {
+        this.day++; 
     }
 }

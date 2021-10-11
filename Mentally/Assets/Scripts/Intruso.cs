@@ -22,7 +22,7 @@ public class Intruso : MonoBehaviour
     private static float timeBetweenWaves = 10;
 
     private Vector3 scaleChange;
-
+  
 
     [SerializeField] GameObject gameController;
     private GameController gameControllerScript;
@@ -31,15 +31,21 @@ public class Intruso : MonoBehaviour
 
     [SerializeField] Transform targetDoor;
 
+    Vector3 initPos;
+    Vector3 initScale; 
+
     // Start is called before the first frame update
     void Start()
     {
 
-
+        initPos = gameObject.transform.position;
+        initScale = gameObject.transform.localScale; 
         scaleChange = new Vector3(2, 2, 2);
         agent = GetComponent<NavMeshAgent>();
 
         gameControllerScript = gameController.GetComponent<GameController>();
+       
+
     }
 
     // Update is called once per frame
@@ -82,6 +88,7 @@ public class Intruso : MonoBehaviour
                 if (gameControllerScript.getCharacter() == 2)
                 {
                     agent.transform.localScale += scaleChange;
+                 
                 }
             }
 
@@ -100,7 +107,7 @@ public class Intruso : MonoBehaviour
                 m_animator.SetBool("Wave", true);
             }
 
-            if (dist <= 29)
+            if (dist <= 16)
             {
                 gameObject.SetActive(false);
             }
@@ -121,5 +128,10 @@ public class Intruso : MonoBehaviour
         transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
+    public void reset() {
+        gameObject.transform.position = initPos;
+        gameObject.transform.localScale = initScale;
+        gameObject.SetActive(false); 
+    }
    
 }
