@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - AudioManager
     - Bed
     - Cake
+    - Door
     - GameController
     - Intruso
     - Lamp
@@ -37,7 +38,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
-    - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/Game.unity:
     - Class: 1
@@ -87,7 +87,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1506}
     - Class: 114
-      Script: {instanceID: 1804}
+      Script: {instanceID: 1802}
+    - Class: 114
+      Script: {instanceID: 1876}
     - Class: 114
       Script: {instanceID: 1976}
     - Class: 114
@@ -96,8 +98,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 2350}
     - Class: 114
       Script: {instanceID: 2460}
-    - Class: 114
-      Script: {instanceID: 2478}
     - Class: 114
       Script: {instanceID: 2612}
     - Class: 114
@@ -217,19 +217,13 @@ ScriptsOnlyBuild:
     className: LayoutElement
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Button
-  - hash:
-      serializedVersion: 2
       Hash: 6bc76e17f0d5e93f3eea7f5a2fe227f3
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: 3cd4c114eaa607ee6534016247db8b8e
+      Hash: 47356de9a34bfbfbd90816645f9f7a0d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Intruso
@@ -263,6 +257,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Shadow
+  - hash:
+      serializedVersion: 2
+      Hash: f36d6982bdd4029feabaf2151f9bfb3d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Door
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -385,7 +385,7 @@ ScriptsOnlyBuild:
     className: UnityOnJointBreakMessageListener
   - hash:
       serializedVersion: 2
-      Hash: e4c4a9bfe4cf02c421d428c2a0d89f30
+      Hash: c63b15a80995443809a9588eb6dedf9b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameController
@@ -433,7 +433,7 @@ ScriptsOnlyBuild:
     className: UnityOnBecameVisibleMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 3a20ab04a40e05f17c6b990ad4721aa1
+      Hash: 3c6bb88acbcb6335abf3368be7972286
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SimpleSampleCharacterControl
@@ -1129,12 +1129,6 @@ ScriptsOnlyBuild:
     className: Sink
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: MenuScript
-  - hash:
-      serializedVersion: 2
       Hash: 11319334e5365797f8056694f9b5dae4
     assemblyName: Assembly-CSharp.dll
     namespaceName: TMPro.Examples
@@ -1220,4 +1214,4 @@ ScriptsOnlyBuild:
   platform: 19
   scenePathNames:
   - Assets/Scenes/Game.unity
-  playerPath: D:/PSullivan/Documents/Uni/5o/TFG-Videojuegos/Mentally/Builds/Mentally.exe
+  playerPath: D:/PSullivan/Documents/Uni/5o/TFG2/MentallyBuild/Mentally.exe
